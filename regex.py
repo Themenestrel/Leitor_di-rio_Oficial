@@ -3,6 +3,9 @@ import os
 import sqlite3
 from regras import RULES_CONFIGS
 
+#Verifica se o banco existe e, se existir, deleta e inicia um novo. Por enquanto na fase de testes, não necessito ir aumentando o banco.
+#Cria as primeiras colunas do banco.
+
 def create_db():
     os.remove('Leitor_DO.db') if os.path.exists('Leitor_DO.db') else None
     con = sqlite3.connect('Leitor_DO.db')
@@ -25,7 +28,9 @@ def insert_record(cur, nome_da_secretaria, tipo_instrumento, nome_do_instrumento
 def read_input(file_name):
     with open(file_name, 'r', encoding='utf-8') as f:
         return str(f.readlines())
-
+    
+    
+#Abre o arquivo selecionado e aplica as regras de regex, lançando o que encontrar no banco.
 def main():
     con, cur = create_db()
     try:
